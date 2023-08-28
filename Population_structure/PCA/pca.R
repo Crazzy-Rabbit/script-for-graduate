@@ -11,10 +11,8 @@
   
   p = ggplot(data  = a, aes(x = a[,3], y = a[,4],
             group=Breed,shape=Breed,color=Breed,fill=Breed))+
-      geom_point(size=3,alpha = 0.15,stroke=1) + 
-      scale_color_manual(values=m_colour)+
-      scale_fill_manual(values=m_colour) + 
-      scale_shape_manual(values=m_shape) 
+      geom_point(size=3,alpha = 0.15,stroke=1) + scale_color_manual(values=m_colour)+ 
+      scale_fill_manual(values=m_colour) +  scale_shape_manual(values=m_shape) 
   
   p + labs(x = "PC1(12.18%)", y = "PC2(6.82%)") + 
       geom_hline(yintercept = 0, linetype = "dashed", color = "black") +
@@ -22,3 +20,25 @@
       theme_classic() + # 去除灰色背景及网格线
       theme(panel.border = element_rect(fill=NA,color="black", size=0.5, linetype ="solid")) +#添加边框
       theme(legend.position = "none")
+
+
+  ## wag-hol-ang
+  library("ggplot2")
+  a=read.table("wag-hol-ang.pca.txt",header=F)
+  Breed=a[,1] 
+  m_colour=c("ANG"="#6BB93F","HOL"="#6BB93F","WAG"="#E20593")
+  m_shape=c("ANG"=21,"HOL"=21,"WAG"=22)
+
+  p = ggplot(data  = a, aes(x = a[,3], y = a[,4],
+             group=Breed,shape=Breed,color=Breed,fill=Breed))+
+    geom_point(size=3,alpha = 0.15,stroke=1) + scale_color_manual(values=m_colour)+
+    scale_fill_manual(values=m_colour) + scale_shape_manual(values=m_shape) 
+  
+  p + labs(x = "PC1(31.98%)", y = "PC2(17.90%)") + 
+    geom_hline(yintercept = 0, linetype = "dashed", color = "black") +
+    geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
+    
+    theme_classic() + # 去除灰色背景及网格线
+    theme(panel.border = element_rect(fill=NA,color="black", size=0.5, linetype ="solid")) +#添加边框
+    theme(legend.position = "none")
+
