@@ -16,8 +16,6 @@ head -n 4974 wag.windowed.sorted.pi > wag.windowed.sorted.5%.pi
 cat wag.windowed.sorted.5%.pi wag_A-H-lnratio.sorted.5%.txt > wag5%_wag_A-H5%.pi
 
 ############## xpehh ################
-selscan="/home/software/selscan/bin/linux/selscan"
-norm="/home/software/selscan/bin/linux/norm"
 # beagle
 java -jar -Xmn48G -Xms48G -Xmx96G /public/home/sll/software/beagle.25Nov19.28d.jar gt=61_cattle_geno01_maf005_nchr.vcf out=61_cattle_geno01_maf005_nchr.beagle ne=61
 
@@ -34,7 +32,8 @@ vcftools --vcf 01.Wag.recode.vcf --recode --recode-INFO-all --chr ${k} --out Wag
 vcftools --vcf A_H.chr${k}.recode.vcf --plink --out chr${k}.MT
 awk 'BEGIN{OFS=" "} {print $1,".",$4,$4}' chr${k}.MT.map > chr${k}.MT.map.distance
 done
-
+selscan="/home/software/selscan/bin/linux/selscan"
+norm="/home/software/selscan/bin/linux/norm"
 for ((k=1; k<=29; k++));
 do
 $selscan --xpehh --vcf Wag.chr${k}.recode.vcf --vcf-ref A_H.chr${k}.recode.vcf --map chr${k}.MT.map.distance --threads 10 --out  chr${k}.A_H-Wag          
