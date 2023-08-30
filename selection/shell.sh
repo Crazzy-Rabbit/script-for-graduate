@@ -25,8 +25,7 @@ vcftools --gzvcf 61_cattle_geno01_maf005_nchr.beagle.vcf.gz --keep /home/sll/202
 vcftools --gzvcf 61_cattle_geno01_maf005_nchr.beagle.vcf.gz --keep /home/sll/20230818-sll-vcf/selection/wagyu.txt --recode --recode-INFO-all --out ./XP-EHH.progress/01.Wag
 
 cd XP-EHH.progress
-for ((k=1; k<=29; k++));
-do 
+for ((k=1; k<=29; k++)); do 
 vcftools --vcf 01.A_H.recode.vcf --recode --recode-INFO-all --chr ${k} --out A_H.chr${k}
 vcftools --vcf 01.Wag.recode.vcf --recode --recode-INFO-all --chr ${k} --out Wag.chr${k}                  
 vcftools --vcf A_H.chr${k}.recode.vcf --plink --out chr${k}.MT
@@ -34,8 +33,7 @@ awk 'BEGIN{OFS=" "} {print $1,".",$4,$4}' chr${k}.MT.map > chr${k}.MT.map.distan
 done
 selscan="/home/software/selscan/bin/linux/selscan"
 norm="/home/software/selscan/bin/linux/norm"
-for ((k=1; k<=29; k++));
-do
+for ((k=1; k<=29; k++)); do
 $selscan --xpehh --vcf Wag.chr${k}.recode.vcf --vcf-ref A_H.chr${k}.recode.vcf --map chr${k}.MT.map.distance --threads 10 --out  chr${k}.A_H-Wag          
 $norm --xpehh --files  chr${k}.A_H-Wag.xpehh.out --bp-win --winsize 50000
 # add win and step
