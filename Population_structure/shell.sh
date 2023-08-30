@@ -4,7 +4,7 @@ plink --bfile 159_cattle_snp_geno01_maf005_nchr --allow-extra-chr --chr-set 29  
 perl ~/script/MEGA/02_MEGA-meg.pl plink.genome 159_cattle_snp_geno01_maf005_nchr.fam 159_cattle_snp_geno01_maf005_nchr.meg
 #################### MLtree ##########################
 python /public/home/sll/script/vcf2phylip.py --input 159_cattle_snp_geno01_maf005.vcf.gz --output-prefix 159_cattle_snp_geno01_maf005
-raxmlHPC-PTHREADS-SSE3 -f a -m GTRGAMMA -p 23 -x 123 -# 100 -s 159_cattle_snp_geno01_maf005.min4.phy -n 159_cattle_snp_geno01_maf005 -T 20
+raxmlHPC-PTHREADS-SSE3 -f a -m GTRGAMMA -p 23 -x 123 -# 100 -s 159_cattle_snp_geno01_maf005.min4.phy  -o SRR14339798 -n 159_cattle_snp_geno01_maf005 -T 20
 
 ####################### PCA ##########################
 gcta="/home/software/gcta_1.92.3beta3/gcta64"
