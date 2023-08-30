@@ -29,7 +29,6 @@ for r in $(seq 1 $nseed);
 do 
   curr_dir="${base_dir}/${r}.run"
   mkdir -p $curr_dir && cd $curr_dir
-  
   for K in $(seq 2 $nK); 
   do
     seed=`shuf -i 1-100 -n 1`
