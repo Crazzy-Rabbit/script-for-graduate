@@ -37,6 +37,11 @@ do
     $admixture -s $seed --cv $bed $K -j20 | tee ${curr_dir}/log${K}.out
   done;
 done
-# 统计cv
-
+############# 统计cv
+#! /bin/bash
+for i in {1..20}; do
+grep "CV" ${i}.run/log*.out | awk '{print $3, $4}' | cut -c 4,7-20 > ${i}run.cv_out.txt
+done
+paste *cv_out.txt > all.cv_out
+rm *cv_out.txt
 ########################################################
