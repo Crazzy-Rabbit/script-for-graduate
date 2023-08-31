@@ -45,4 +45,8 @@ grep "CV" ${i}.run/log*.out | awk '{print $3, $4}' | cut -c 4,7-20 > ${i}run.cv_
 done
 paste *cv_out.txt > all.cv_out
 rm *cv_out.txt
-########################################################
+################## outgroup f3 #####################
+~/20230818-sll-vcf/structure/outgroupf3
+plink --allow-extra-chr --chr-set 29 -bfile 159_cattle_snp_geno01_maf005_nchr --recode --set-missing-var-ids @:# --out 159_cattle_snp_geno01_maf005_nchr
+python cal_f3.py --ped 159_cattle_snp_geno01_maf005_nchr --sample 159poplist.txt --popfile popF3.txt --out outgroupf3
+
