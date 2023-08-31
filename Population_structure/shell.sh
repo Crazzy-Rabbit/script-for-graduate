@@ -5,14 +5,15 @@ perl ~/script/MEGA/02_MEGA-meg.pl plink.genome 159_cattle_snp_geno01_maf005_nchr
 #################### MLtree ###########################
 iqtree="~/software/iqtree-1.6.12/bin/iqtree"
 # ld过滤
-plink --allow-extra-chr --chr-set 29 -file 159_cattle_snp_geno01_maf005 --set-missing-var-ids @:# --indep-pairwise 50 25 0.2 --out 159_cattle_snp_geno01_maf005_ld502502
-plink --allow-extra-chr --chr-set 29 -file 159_cattle_snp_geno01_maf005 --set-missing-var-ids @:# --extract 159_cattle_snp_geno01_maf005_ld502502.prune.in --make-bed --out 159_cattle_snp_geno01_maf005_ld502502
-# ml树
-plink --allow-extra-chr --chr-set 29 --vcf 159_cattle_snp_geno01_maf005.vcf.gz --recode --out 159_cattle_snp_geno01_maf005
-python ~/script/ped2fa.py 159_cattle_snp_geno01_maf005.ped 159_cattle_snp_geno01_maf005.fa
-$iqtree -s 159_cattle_snp_geno01_maf005.fa -m TEST -st DNA -bb 1000 -nt AUTO
-python ~/script/vcf2phylip.py --input 159_cattle_snp_geno01_maf005.vcf.gz --output-prefix 159_cattle_snp_geno01_maf005
-raxmlHPC-PTHREADS-SSE3 -f a -m GTRGAMMA -p 23 -x 123 -# 100 -s 159_cattle_snp_geno01_maf005.min4.phy  -o SRR14339798,SRR14416027 -n 159_cattle_snp_geno01_maf005 -T 20
+plink --allow-extra-chr --chr-set 29 -vcf 159_cattle_snp_geno01_maf005.vcf --set-missing-var-ids @:# --indep-pairwise 50 25 0.2 --out 159_cattle_snp_geno01_maf005_ld502502
+plink --allow-extra-chr --chr-set 29 -vcf 159_cattle_snp_geno01_maf005.vcf --set-missing-var-ids @:# --extract 159_cattle_snp_geno01_maf005_ld502502.prune.in --recode vcf-iid --out 159_cattle_snp_geno01_maf005_ld502502
+# iqtree
+plink --allow-extra-chr --chr-set 29 --vcf 159_cattle_snp_geno01_maf005_ld502502.vcf.gz --recode --out 159_cattle_snp_geno01_maf005_ld502502
+python ~/script/ped2fa.py 159_cattle_snp_geno01_maf005_ld502502.ped 159_cattle_snp_geno01_maf005_ld502502.fa
+$iqtree -s 159_cattle_snp_geno01_maf005_ld502502.fa -m TEST -st DNA -bb 1000 -nt AUTO
+# raxml
+python ~/script/vcf2phylip.py --input 159_cattle_snp_geno01_maf005_ld502502.vcf.gz --output-prefix 159_cattle_snp_geno01_maf005_ld502502
+raxmlHPC-PTHREADS-SSE3 -f a -m GTRGAMMA -p 23 -x 123 -# 100 -s 159_cattle_snp_geno01_maf005_ld502502.min4.phy  -o SRR14339798,SRR14416027 -n 159_cattle_snp_geno01_maf005 -T 20
 ####################### PCA ###########################
 gcta="/home/software/gcta_1.92.3beta3/gcta64"
 $gcta --bfile 157_cattle_snp_geno01_maf005-ld502502_nchr.bim --make-grm --autosome-num 29 --out PCA_157_cattle_snp_geno01_maf005-ld502502_nchr.gcta
