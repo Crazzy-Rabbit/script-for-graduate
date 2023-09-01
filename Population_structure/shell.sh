@@ -11,7 +11,7 @@ plink --allow-extra-chr --chr-set 29 -vcf 159_cattle_snp_geno01_maf005.vcf --set
 plink --allow-extra-chr --chr-set 29 --vcf 159_cattle_snp_geno01_maf005_ld502502.vcf.gz --recode --out 159_cattle_snp_geno01_maf005_ld502502
 python ~/script/ped2fa.py 159_cattle_snp_geno01_maf005_ld502502.ped 159_cattle_snp_geno01_maf005_ld502502.fa
 $iqtree -s 159_cattle_snp_geno01_maf005_ld502502.fa -m TEST -st DNA -bb 1000 -nt AUTO
-### 159_cattle_snp_geno01_maf005_ld502502.fa.contree 一致树
+# 比raxml快很多， 一天多就完了 159_cattle_snp_geno01_maf005_ld502502.fa.contree 一致树
 # raxml
 python ~/script/vcf2phylip.py --input 159_cattle_snp_geno01_maf005_ld502502.vcf.gz --output-prefix 159_cattle_snp_geno01_maf005_ld502502
 raxmlHPC-PTHREADS-SSE3 -f a -m GTRGAMMA -p 23 -x 123 -# 100 -s 159_cattle_snp_geno01_maf005_ld502502.min4.phy  -o SRR14339798,SRR14416027 -n 159_cattle_snp_geno01_maf005 -T 20
