@@ -28,15 +28,13 @@ nK=$1; nseed=$2; bed=$3; base_dir="`pwd`/admixture"
 admixture="/home/software/admixture_linux-1.3.0/admixture"
 mkdir -p $base_dir
 # 生成20个随机数
-for r in $(seq 1 $nseed); 
-do 
-  curr_dir="${base_dir}/${r}.run"
-  mkdir -p $curr_dir && cd $curr_dir
-  for K in $(seq 2 $nK); 
-  do
-    seed=`shuf -i 1-100 -n 1`
-    $admixture -s $seed --cv $bed $K -j20 | tee ${curr_dir}/log${K}.out
-  done;
+for r in $(seq 1 $nseed); do 
+curr_dir="${base_dir}/${r}.run"
+mkdir -p $curr_dir && cd $curr_dir
+for K in $(seq 2 $nK); do
+seed=`shuf -i 1-100 -n 1`
+$admixture -s $seed --cv $bed $K -j20 | tee ${curr_dir}/log${K}.out
+done;
 done
 ############# 统计cv
 #! /bin/bash
