@@ -1,5 +1,8 @@
 ############## fst   ################
 vcftools --vcf 61_cattle_geno01_maf005_nchr.vcf --weir-fst-pop A_H.txt --weir-fst-pop wagyu.txt --fst-window-size 50000 --fst-window-step 25000 --out wag_A-H
+## sort get first 5%
+sort -gr -k 5 wag_A-H.windowed.weir.fst  > wag_A-H.windowed.weir.sorted.fst 
+head -n 4974 wag_A-H.windowed.weir.sorted.fst  > wag_A-H.windowed.weir.sorted.5%.fst 
 ############## pi   ################
 ## -ln(piwa/pia-h)
 vcftools --vcf 61_cattle_geno01_maf005_nchr.vcf --window-pi 50000 --window-pi-step 25000 --keep A_H.txt --out A_H
@@ -36,3 +39,15 @@ $norm --xpehh --files  chr${k}.A_H-Wag.xpehh.out --bp-win --winsize 50000
 python ~/script/selection/XPEHH_Win_step.py --file chr${k}.A_H-Wag.xpehh.out.norm --chrosome $k --window 50000 --step 25000
 done
 cat {1..29}.XPEHH > ../A_H-Wag.norm.XPEHH
+## sort get first 5%
+sort -gr -k 5 A_H-Wag.norm.XPEHH > A_H-Wag.norm.sorted.XPEHH
+head -n 4972 A_H-Wag.norm.sorted.XPEHH > A_H-Wag.norm.sorted.5%.XPEHH
+######################################
+# intersect 
+bedtools intersect -a wag_A-H.windowed.weir.sorted.5%.fst -b wag_A-H-lnratio.sorted.5%.txt > wag_A-H.sorted.5%.fst.lnratio
+bedtools intersect -a wag_A-H.sorted.5%.fst.lnratio -b A_H-Wag.norm.sorted.5%.XPEHH > wag_A-H.sorted.5%.fst.lnratio.xpehh
+awk '{print $1"\t"$2"\t"$3}' wag_A-H.sorted.5%.fst.lnratio.xpehh > wag_A-H.sorted.5%.fst.lnratio.xpehh.pos
+######################################
+# biomart annotation
+bedtools intersect -a wag_A-H.sorted.5%.fst.lnratio.xpehh -b /home/sll/Biomart/biomart_20257_release110_July_2023.txt -wao > wag_A-H.sorted.5%.fst.lnratio.xpehh.pos.biomart.gene
+######################################
