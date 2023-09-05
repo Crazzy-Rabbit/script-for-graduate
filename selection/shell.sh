@@ -51,3 +51,8 @@ awk '{print $1"\t"$2"\t"$3}' wag_A-H.sorted.5%.fst.lnratio.xpehh > wag_A-H.sorte
 # biomart annotation
 bedtools intersect -a wag_A-H.sorted.5%.fst.lnratio.xpehh -b /home/sll/Biomart/biomart_20257_release110_July_2023.txt -wao > wag_A-H.sorted.5%.fst.lnratio.xpehh.pos.biomart.gene
 ######################################
+# get chr21: 33.20-33.28 M
+vcftools --gzvcf ~/20230818-sll-vcf/selection/xpehh/61_cattle_geno01_maf005_nchr.beagle.vcf.gz --chr 21 --from-bp 33200001 --to-bp 33285000  --recode --recode-INFO-all --out chr21-3320-33285
+# Tajima's D test
+vcftools --vcf chr21-3320-33285.recode.vcf --keep ~/20230818-sll-vcf/selection/wagyu.txt --TajimaD 5000 --out wagyu
+vcftools --vcf chr21-3320-33285.recode.vcf --keep /home/sll/20230818-sll-vcf/selection/A_H.txt --TajimaD 5000 --out A-H
