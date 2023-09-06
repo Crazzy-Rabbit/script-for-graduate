@@ -31,7 +31,7 @@ group$ID <- NULL
 new_order <- c("Wagyu", "Mishima", "KUC", "Haw", "mon", "kaz", "yb", "ang", "hol", "char", "sho","sim") # 新的组顺序
 group$Group <- factor(group$Group, levels = new_order)
 
-data2=read.table ("4variant.txt", header = TRUE, stringsAsFactors = F) # 转置后的文件
+data2=read.table ("3variant.txt", header = TRUE, stringsAsFactors = F) # 转置后的文件
 data2=data.matrix(data2)
 
 annotation_row = data.frame(Group=as.vector(group$Group))
