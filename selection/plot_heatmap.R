@@ -40,7 +40,7 @@ ra_col <- list(Group=c(ang="#873186", hol="#E20593", char="#6BB93F", sho="#87318
                        Haw="#6BB93F", mon="#873186",  kaz="#E20593", yb="#6BB93F",
                        Mishima="#873186",KUC="#6BB93F",Wagyu="#E20593"))
 #"#3364BC", "#000000", "#F37020", "#DBB71D"
-gap_line <- c(21,112,121) # 数量划分，根据图例顺序，分开每组的热图
+gap_line <- c(70,112,121) # 数量划分，根据图例顺序，分开每组的热图
 
 pheatmap(data2, annotation_row=annotation_row, border_color=NA, annotation_colors=ra_col,
         cluster_row=FALSE,cluster_col=FALSE,gaps_row=gap_line,legend =FALSE,
