@@ -3,6 +3,8 @@ vcftools --vcf 61_cattle_geno01_maf005_nchr.vcf --weir-fst-pop A_H.txt --weir-fs
 ## sort get first 5%
 sort -gr -k 5 wag_A-H.windowed.weir.fst  > wag_A-H.windowed.weir.sorted.fst 
 head -n 4974 wag_A-H.windowed.weir.sorted.fst  > wag_A-H.windowed.weir.sorted.5%.fst 
+bedtools intersect -a wag_A-H.windowed.weir.sorted.5%.fst  -b ~/Biomart/biomart_20257_release110_July_2023.txt -wao > wag_A-H.windowed.weir.sorted.5%.fst.biomart.gene
+
 ############## pi   ################
 ## -ln(piwa/pia-h)
 vcftools --vcf 61_cattle_geno01_maf005_nchr.vcf --window-pi 50000 --window-pi-step 25000 --keep A_H.txt --out A_H
@@ -12,16 +14,15 @@ python /home/sll/script/selection/ln_ratio.py --group1 wag.windowed.pi --group2 
 sort -gr -k 4  wag_A-H-lnratio.txt > wag_A-H-lnratio.sorted.txt
 sort -g -k 5 wag.windowed.pi > wag.windowed.sorted.pi 
 head -n 4973 wag_A-H-lnratio.sorted.txt > wag_A-H-lnratio.sorted.5%.txt
-head -n 4974 wag.windowed.sorted.pi > wag.windowed.sorted.5%.pi
-## cat 2 file
-cat wag.windowed.sorted.5%.pi wag_A-H-lnratio.sorted.5%.txt > wag5%_wag_A-H5%.pi
+bedtools intersect -a wag_A-H-lnratio.sorted.5%.txt  -b ~/Biomart/biomart_20257_release110_July_2023.txt -wao > wag_A-H-lnratio.sorted.5%.txt.biomart.gene
+
 ############## xpehh ################
 # beagle
 java -jar -Xmn48G -Xms48G -Xmx96G /public/home/sll/software/beagle.25Nov19.28d.jar gt=61_cattle_geno01_maf005_nchr.vcf out=61_cattle_geno01_maf005_nchr.beagle ne=61
 ## /home/sll/20230818-sll-vcf/selection/xpehh
 mkdir XP-EHH.progress
-vcftools --gzvcf 61_cattle_geno01_maf005_nchr.beagle.vcf.gz --keep /home/sll/20230818-sll-vcf/selection/A_H.txt --recode --recode-INFO-all --out ./XP-EHH.progress/01.A_H
-vcftools --gzvcf 61_cattle_geno01_maf005_nchr.beagle.vcf.gz --keep /home/sll/20230818-sll-vcf/selection/wagyu.txt --recode --recode-INFO-all --out ./XP-EHH.progress/01.Wag
+vcftools --gzvcf 61_cattle_geno01_maf005_nchr.beagle.vcf.gz --keep ~/20230818-sll-vcf/selection/A_H.txt --recode --recode-INFO-all --out ./XP-EHH.progress/01.A_H
+vcftools --gzvcf 61_cattle_geno01_maf005_nchr.beagle.vcf.gz --keep ~/20230818-sll-vcf/selection/wagyu.txt --recode --recode-INFO-all --out ./XP-EHH.progress/01.Wag
 
 cd XP-EHH.progress
 for ((k=1; k<=29; k++)); do 
@@ -42,6 +43,8 @@ cat {1..29}.XPEHH > ../A_H-Wag.norm.XPEHH
 ## sort get first 5%
 sort -gr -k 5 A_H-Wag.norm.XPEHH > A_H-Wag.norm.sorted.XPEHH
 head -n 4972 A_H-Wag.norm.sorted.XPEHH > A_H-Wag.norm.sorted.5%.XPEHH
+bedtools intersect -a A_H-Wag.norm.sorted.5%.XPEHH  -b ~/Biomart/biomart_20257_release110_July_2023.txt -wao > A_H-Wag.norm.sorted.5%.XPEHH.biomart.gene
+
 ######################################
 # intersect 
 bedtools intersect -a wag_A-H.windowed.weir.sorted.5%.fst -b wag_A-H-lnratio.sorted.5%.txt > wag_A-H.sorted.5%.fst.lnratio
@@ -50,6 +53,7 @@ awk '{print $1"\t"$2"\t"$3}' wag_A-H.sorted.5%.fst.lnratio.xpehh > wag_A-H.sorte
 ######################################
 # biomart annotation
 bedtools intersect -a wag_A-H.sorted.5%.fst.lnratio.xpehh -b /home/sll/Biomart/biomart_20257_release110_July_2023.txt -wao > wag_A-H.sorted.5%.fst.lnratio.xpehh.pos.biomart.gene
+
 ######################################
 # get chr21: 33.20-33.28 M
 vcftools --gzvcf ~/20230818-sll-vcf/selection/xpehh/61_cattle_geno01_maf005_nchr.beagle.vcf.gz --chr 21 --from-bp 33200001 --to-bp 33285000  --recode --recode-INFO-all --out chr21-3320-33285
