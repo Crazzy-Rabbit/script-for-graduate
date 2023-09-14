@@ -145,7 +145,7 @@ python ~/script/replace_chr/ReplaceChr.py -i 03.wagyu_angus_hostein.mergeCNVR -c
 python ~/script/CNVCaller/GetCleanCNV.py --cnvr ~/2023-CNV/01_CNVcaller_RD_normalized/03.wagyu_angus_hostein-30chr.mergeCNVR --clean 09.wagyu_angus_hostein-CNVcaller_smoove_30chr.Get_Region.txt --out 10.wagyu_angus_hostein-CNVcaller_smoove_30chr.CNVR
 
 ## calVstAfterCNVcaller.py计算VST
-python ~/script/CNVCaller/calVstAfterCNVcaller.py --file 10.wagyu_angus_hostein-CNVcaller_smoove_30chr.CNVR --pop1 angus_hostein.txt --pop2 wagyu.txt --out wagyu-angus_hostein.vst
+python ~/script/CNVCaller/calVstAfterCNVcaller.py --file 10.wagyu_angus_hostein-CNVcaller_smoove_30chr.CNVR --p1 angus_hostein.txt --p2 wagyu.txt --out wagyu-angus_hostein.vst
 
 wagyu-angus_hostein.vst.Vst.txt将<0的改为0，画图，取>= 0.5的为群体间高度分化的Vst值对应的CNVR
 
