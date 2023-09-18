@@ -27,7 +27,6 @@ def results(data, step_size, window_size):
             if not pd.isna(row['pos']):
                 normxpehh_vals.append(row['normxpehh'])
 
-        # 计算 normxpehh 的平均值并保留4位小数, 统计区间SNP数量
         avg_normxpehh = 0
         nvar = 0
         if len(normxpehh_vals) > 0:
@@ -48,7 +47,6 @@ def main(file, chromosome, window, step):
     step_size = step
     out = results(data, step_size, window_size)
 
-    # 创建一个 DataFrame 对象来保存结果，并使用 to_csv 方法将其写入文件中
     result_df = pd.DataFrame(out, columns=["BIN_START", "BIN_END", 
                                            "avg_normxpehh", "nvar"])
     result_df.loc[:, 'CHROM'] = chromosome
