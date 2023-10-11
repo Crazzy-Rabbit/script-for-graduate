@@ -56,7 +56,7 @@ bedtools intersect -a wag_A-H.sorted.5%.fst.lnratio.xpehh -b /home/sll/Biomart/b
 
 ######################################
 # get chr21: 33.20-33.28 M
-vcftools --gzvcf ~/20230818-sll-vcf/selection/xpehh/61_cattle_geno01_maf005_nchr.beagle.vcf.gz --chr 21 --from-bp 33200001 --to-bp 33285000  --recode --recode-INFO-all --out chr21-3320-33285
+vcftools --gzvcf ~/20230818-sll-vcf/selection/xpehh/61_cattle_geno01_maf005_nchr.beagle.vcf.gz --chr 21 --from-bp 33100001 --to-bp 33300000  --recode --recode-INFO-all --out chr21-3310-3330
 # Tajima's D test
-vcftools --vcf chr21-3320-33285.recode.vcf --keep ~/20230818-sll-vcf/selection/wagyu.txt --TajimaD 5000 --out wagyu
-vcftools --vcf chr21-3320-33285.recode.vcf --keep /home/sll/20230818-sll-vcf/selection/A_H.txt --TajimaD 5000 --out A-H
+vcftools --vcf chr21-3310-3330.recode.vcf --keep ~/20230818-sll-vcf/selection/wagyu.txt --TajimaD 5000 --out wagyu-331-333
+vcftools --vcf chr21-3310-3330.recode.vcf --keep /home/sll/20230818-sll-vcf/selection/A_H.txt --TajimaD 5000 --out A-H-331-333
