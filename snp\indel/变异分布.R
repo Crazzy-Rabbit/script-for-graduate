@@ -17,39 +17,39 @@ ggplot(data,aes(x=length, y=number,fill="#93DAD1", colour="#9870CB"))+
   theme(axis.text.x = element_text(face="bold"))+
   theme(legend.position="none")+
   scale_y_continuous(labels = function(x) format(x, scientific = FALSE))+
-  scale_y_break(c(4000,5000),
-                space=0.2,
+  scale_y_break(c(4000,5000),space=0.2,
                 scales=1,expand=c(0,0))
 
-# freq
+# freq 500 200
 library(ggplot2)
 data = read.table("indel_freq.txt",sep='\t',header=T)
-ggplot(data, aes(x=Chr,y=indel,colour="#7290CC", fill="#9870CB",))+
-  #geom_line(colour="#9870CB", linewidth=1.2)+
-  geom_point(colour="#7290CC", fill="#9870CB",size=3, shape=22)+
+ggplot(data, aes(x=Chr,y=indel,colour="black", fill="#9870CB",))+
+ # geom_line(colour="#9870CB")+
+  geom_xspline(colour="#9870CB",spline_shape = -0.5)+
+  geom_point(colour="black", fill="#9870CB",size=2, shape=23)+
   expand_limits(y = 0.2) +
-  theme_classic()+
+  theme_bw()+
   theme(axis.text.y = element_text(face="bold"))+
   theme(axis.text.x = element_text(face="bold"))+
   labs(x="Chromosome", y="InDels/Kb")+
   scale_x_continuous(expand=c(0.02,0),
-                     breaks = c(seq(0,29, by=2)))
+                     breaks = c(seq(1,29, by=2)))
 
 
-### SNP
-# freq
+### SNP 
+# freq  500 200
 library(ggplot2)
 data = read.table("snp_freq.txt",sep='\t',header=T)
-ggplot(data, aes(x=Chr,y=snp,fill="#7290CC",colour="#93DAD1"))+
-  #geom_line(colour="#7290CC", linewidth=1.2)+
-  geom_point(fill="#7290CC",colour="#93DAD1",size=3, shape=23)+
+ggplot(data, aes(x=Chr,y=snp,fill="#7290CC",colour="black"))+
+  geom_xspline(colour="#7290CC",spline_shape = -0.5)+
+  geom_point(fill="#7290CC",colour="black",size=2, shape=21)+
   expand_limits(y = 2) +
   theme(axis.text.y = element_text(face="bold"))+
   theme(axis.text.x = element_text(face="bold"))+
-  theme_classic()+
+  theme_bw()+
   labs(x="Chromosome", y="SNPs/Kb")+
   scale_x_continuous(expand=c(0.02,0),
-                    breaks = c(seq(0,29, by=2)))
+                    breaks = c(seq(1,29, by=2)))
 
 ## tstv
 library(ggplot2)
@@ -60,7 +60,7 @@ m_cols <- c("A/G"="#93DAD1","C/T"="#93DAD1",
 
 ggplot(data, aes(x=ts,y=count, col=ts,fill=ts))+
   geom_bar(stat = "identity",position="stack",width=0.5)+
-  theme_minimal()+
+  theme_bw()+
   theme(axis.text.y = element_text(face="bold"))+
   theme(axis.text.x = element_text(face="bold"))+
   theme(legend.position="none")+
@@ -74,6 +74,7 @@ ggplot(data, aes(x=ts,y=count, col=ts,fill=ts))+
 ## 在基因组位置 500 400
 library(ggplot2)
 library(ggbreak)
+library(RColorBrewer)
 data = read.table("snpindel_vardis.txt",sep='\t',header=T)
 data$Region <- factor(data$Region, level=c("ncRNA_splicing","splicing","UTR5","ncRNA_exonic","UTR3","upstream",
                                            "downstream","exonic","ncRNA_intronic","intronic","intergenic"))
@@ -84,7 +85,7 @@ m_col = c("#EEBB47","#D8793F",
 ggplot(data, aes(x=Region, y=snp, fill=Region))+
   geom_bar(stat = "identity",position="stack")+
   scale_y_continuous(labels=function(x) format(x, scientific = FALSE))+
-  scale_fill_manual(values=m_col)+
+  scale_fill_manual(values=m_col2)+
   theme_classic()+
   theme(legend.position="none")+
   scale_y_break(c(1000,10000),space=0.2,
@@ -96,6 +97,7 @@ ggplot(data, aes(x=Region, y=snp, fill=Region))+
   theme(axis.text.y.right=element_blank(),axis.ticks.y.right=element_blank(),
         axis.text.y = element_text(face="bold"))+
   labs(x="",y="SNPs Number")
+
 # indel
 ggplot(data, aes(x=Region, y=indel, fill=Region))+
   geom_bar(stat = "identity",position="stack")+
@@ -111,11 +113,10 @@ ggplot(data, aes(x=Region, y=indel, fill=Region))+
         axis.text.y = element_text(face="bold"))+
   labs(x="",y="InDels Number")
 
-### percentage 620 460
+### percentage 
 library(ggplot2)
-library(ggbreak)
 data = read.table("snpindel_percentage.txt",sep='\t',header=T)
-data$type <- factor(data$type, level=c("SNPs","InDels"))
+data$type <- factor(data$type, level=c("InDels","SNPs"))
 data$Region <- factor(data$Region, level=c("ncRNA_splicing","splicing","UTR5","ncRNA_exonic","UTR3","upstream",
                                            "downstream","exonic","ncRNA_intronic","intronic","intergenic"))
 m_col = c("#EEBB47","#D8793F",
@@ -124,17 +125,15 @@ m_col = c("#EEBB47","#D8793F",
 
 ggplot(data,aes(x=per,y=type,group=type,fill=Region))+
   geom_bar(stat = "identity")+
-  coord_flip()+
+ # coord_flip()+
   scale_fill_manual(values=m_col)+
   theme_minimal()+
-  theme(legend.position="top")+
-  guides(fill=guide_legend(title=NULL,ncol=3, byrow=F,reverse=T))+
+  theme(legend.position="left")+
+  guides(fill=guide_legend(title=NULL,ncol=3, byrow=T,reverse=T),)+
   theme(axis.text.x=element_text(face="bold"))+
   theme(axis.text.y=element_text(face="bold"))+
   labs(x="Percentage(%)",y="")
   
-
-
 
 
 
