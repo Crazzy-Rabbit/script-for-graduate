@@ -11,5 +11,7 @@ with open (r1,'r') as region1, open (r2,'r') as region2, open (outfile, 'w') as 
     for line in ld:
         if (line.split()[0], line.split()[1]) in file_region1:
             out.write(line)
-        if (line.split()[0], line.split()[1]) in file_region2:
+        elif (line.split()[0], line.split()[1]) in file_region2:
             out.write(line)
+        else:
+            continue
