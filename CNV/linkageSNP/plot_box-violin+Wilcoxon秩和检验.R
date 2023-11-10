@@ -10,3 +10,11 @@ ggplot(a,aes(x=G,y=FST, fill=G))+
   theme_few()+
   theme(legend.position = "none")+
   theme(axis.text = element_text(face="bold"))
+
+## Wilcoxon秩和检验,检查两组数据平均值是否有显著性
+all = read.table("all-cnv.windowed.weir.fst",header=T)
+select = read.table("CNV-selection.windowed.weir.fst",header=T)
+
+x = all$WEIGHTED_FST
+y = select$WEIGHTED_FST
+wilcox.test(x,y,alternative="less",exact=FALSE,correct=FALSE)
