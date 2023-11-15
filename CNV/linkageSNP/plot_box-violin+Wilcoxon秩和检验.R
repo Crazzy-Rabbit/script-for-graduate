@@ -1,11 +1,12 @@
 library(ggplot2)
 library(ggthemes)
 library(viridis)
+library(ggpval) # 计算组之间的P值
 
 a=read.table("chart-selection_all-CNV.txt",header=T)
 m_col = c("#7290CC", "#9870CB")
 
-ggplot(a,aes(x=G,y=FST,fill=G))+
+p = ggplot(a,aes(x=G,y=FST,fill=G))+
   geom_violin(width =0.6)+
   geom_boxplot(fill ="white", color="grey", width = .1, outlier.size = 0.4)+
   geom_hline(yintercept = 0.4318, linetype = "dashed", color = "black")+
@@ -15,7 +16,8 @@ ggplot(a,aes(x=G,y=FST,fill=G))+
   theme(legend.position="none")+
   theme(axis.text=element_text(face="bold"))
 
-
+## 默认为Wilcoxon秩和检验
+add_pval(p, pairs = list(c(1, 2)), response = 'FST')
 
 ## Wilcoxon秩和检验,检查两组数据平均值是否有显著性
 all = read.table("all-cnv.windowed.weir.fst",header=T)
