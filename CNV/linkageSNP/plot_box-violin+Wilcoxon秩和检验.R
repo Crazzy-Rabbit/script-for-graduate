@@ -1,15 +1,21 @@
 library(ggplot2)
 library(ggthemes)
-a=read.table("chart-selection_all-CNV.txt",header=T)
+library(viridis)
 
-ggplot(a,aes(x=G,y=FST, fill=G))+
-  geom_violin()+
-  geom_boxplot(fill = "white",  size = 1,  width = .2)+
+a=read.table("chart-selection_all-CNV.txt",header=T)
+m_col = c("#7290CC", "#9870CB")
+
+ggplot(a,aes(x=G,y=FST,fill=G))+
+  geom_violin(width =0.6)+
+  geom_boxplot(fill ="white", color="grey", width = .1, outlier.size = 0.4)+
   geom_hline(yintercept = 0.4318, linetype = "dashed", color = "black")+
   labs(x="",y=expression(paste(italic('F')[ST],'-SNP')))+
+  scale_fill_viridis(discrete=TRUE, alpha=0.9) +
   theme_few()+
-  theme(legend.position = "none")+
-  theme(axis.text = element_text(face="bold"))
+  theme(legend.position="none")+
+  theme(axis.text=element_text(face="bold"))
+
+
 
 ## Wilcoxon秩和检验,检查两组数据平均值是否有显著性
 all = read.table("all-cnv.windowed.weir.fst",header=T)
