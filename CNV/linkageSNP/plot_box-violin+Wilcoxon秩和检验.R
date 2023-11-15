@@ -1,7 +1,7 @@
 library(ggplot2)
 library(ggthemes)
 library(viridis)
-library(ggpval) # 计算组之间的P值
+library(ggpval) # ggplot2图形上简单快速添加统计P值
 
 a=read.table("chart-selection_all-CNV.txt",header=T)
 m_col = c("#7290CC", "#9870CB")
