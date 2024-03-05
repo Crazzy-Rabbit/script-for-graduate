@@ -1,35 +1,40 @@
 ## CSPG4错意突变分布
 library(ggplot2)
+library(ggthemes)
 library(patchwork)
-phy.cols <- c("#93DAD1","#7290CC", "#9870CB")
+library(RColorBrewer)
+
+brewer.pal(3,"Dark2")
+phy.cols <- c("#1B9E77","#D95F02","#7570B3","#93DAD1", "#7290CC", "#9870CB")
 df1 = read.table("33217035bp.txt", sep='\t', header=T)
 df1$var <- factor(df1$var, levels=c("A", "G"))
 p1 = ggplot(df1, aes(x=group,y= per, group=var,fill=var))+ 
   geom_bar(stat = "identity")+ 
   coord_flip()+
-  labs(x="", y="") +
+  labs(x="", y="33,217,035bp (A/G; S/G)") +
   scale_x_discrete(limits = unique(df1$group))+   
   scale_fill_manual(values=phy.cols) +
   scale_y_continuous(expand = c(0,0),labels = scales::percent_format(scale = 1))+
   theme_minimal()+
-  theme(axis.text = element_text(face="bold"))+
-  theme (axis.title.x = element_blank ()) +
+  theme(axis.text.y = element_blank(),
+        axis.text.x = element_text(size=10, face="bold", color="black"),
+        plot.title=element_text(color="black", size=10))+
   theme(legend.title=element_blank()) +
   theme(legend.position = "top") 
-
 
 df2 = read.table("33215961bp.txt", sep='\t', header=T)
 df2$var <- factor(df2$var, levels=c("A", "C"))
 p2 = ggplot(df2, aes(x=group,y= per, group=var,fill=var))+ 
   geom_bar(stat = "identity")+ 
   coord_flip()+
-  labs(x="", y="") +
+  labs(x="", y="33,215,961bp (A/C; K/Q)") +
   scale_x_discrete(limits = unique(df2$group))+   
   scale_fill_manual(values=phy.cols) +
   scale_y_continuous(expand = c(0,0),labels = scales::percent_format(scale = 1))+
   theme_minimal()+
-  theme(axis.text = element_text(face="bold"))+
-  theme (axis.title.x = element_blank ()) +
+  theme(axis.text.y = element_blank(),
+        axis.text.x = element_text(size=10, face="bold", color="black"),
+        plot.title=element_text(color="black", size=10))+
   theme(legend.title=element_blank()) +
   theme(legend.position = "top") 
 
@@ -38,12 +43,13 @@ df3$var <- factor(df3$var, levels=c("G", "T"))
 p3 = ggplot(df3, aes(x=group,y= per, group=var,fill=var))+ 
   geom_bar(stat = "identity")+ 
   coord_flip()+
-  labs(x="", y="") +
+  labs(x="", y="33,206,681bp (G/T; G/V)") +
   scale_x_discrete(limits = unique(df3$group))+   
   scale_fill_manual(values=phy.cols) +
   scale_y_continuous(expand = c(0,0),labels = scales::percent_format(scale = 1))+
   theme_minimal()+
-  theme(axis.text = element_text(face="bold"))+
+  theme(axis.text = element_text(size=10, face="bold", color="black"),
+        plot.title=element_text(color="black", size=10))+
   theme(legend.title=element_blank()) +
   theme(legend.position = "top") 
 
@@ -52,14 +58,17 @@ df4$var <- factor(df4$var, levels=c("G", "A"))
 p4 = ggplot(df4, aes(x=group,y= per, group=var,fill=var))+ 
   geom_bar(stat = "identity")+ 
   coord_flip()+
-  labs(x="", y="") +
+  labs(x="", y="33,211,195bp (G/A; R/Q)") +
   scale_x_discrete(limits = unique(df3$group))+   
   scale_fill_manual(values=phy.cols) +
   scale_y_continuous(expand = c(0,0),labels = scales::percent_format(scale = 1))+
   theme_minimal()+
-  theme(axis.text = element_text(face="bold"))+
-  theme(legend.title=element_blank()) +
+  theme(axis.text.y = element_blank(),
+        axis.text.x = element_text(size=10, face="bold", color="black"),
+        plot.title=element_text(color="black", size=10))+
+  theme(legend.title=element_blank()) + 
   theme(legend.position = "top") 
+
 p = p3 | p4 | p2 | p1 
 p
 
