@@ -1,0 +1,26 @@
+#### 选择信号KEGG富集
+
+library(ggplot2)
+library(openxlsx)
+library(RColorBrewer)
+library(ggthemes)
+library(patchwork)
+goinput <- read.xlsx("KEGG.xlsx")
+x3=goinput$logp
+y3=factor(goinput$Term, levels=goinput$Term)
+
+p3 = ggplot(goinput, aes(x=x3,y=y3))+ 
+  geom_bar(stat="identity",width = 0.5,position = position_dodge(0.7),
+           aes(fill=-0.5*log(pvalue)), color="black")+
+  geom_point(aes(size=Count,color=-0.5*log(pvalue)), color="gray")+
+  coord_flip()+
+  scale_color_gradient(low =  "#00BFC4", high = "#F8766D")+ 
+  scale_fill_gradient(low =  "#00BFC4", high = "#FCA311")+ 
+  theme_bw()+ 
+  labs(size="Count", fill=expression(-log[10](pvalue)), 
+       title="KEGG pathway", x=expression(-log[10](pvalue)), y="")+
+  theme(axis.text.y = element_text(size=10, face="bold", color="black"),
+        axis.ticks = element_blank(),
+        axis.text.x = element_text(size=10, face="bold", color="black", 
+                                   angle=90,  hjust = 1, vjust = 1))
+p3
